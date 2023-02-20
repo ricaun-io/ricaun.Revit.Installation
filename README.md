@@ -5,6 +5,32 @@
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Build](../../actions/workflows/Build.yml/badge.svg)](../../actions)
 
+## Features
+### ApplicationPluginsUtils
+```C#
+ApplicationPluginsUtils.DownloadBundle(applicationPluginsFolder, bundleUrl);
+ApplicationPluginsUtils.DownloadBundleAsync(applicationPluginsFolder, bundleUrl);
+ApplicationPluginsUtils.ExtractBundle(applicationPluginsFolder, bundleZipPath);
+ApplicationPluginsUtils.DeleteBundleFiles(applicationPluginsFolder, bundleName);
+```
+
+### RevitInstallationUtils
+```C#
+RevitInstallationUtils.InstalledRevit;
+```
+
+### RevitUtils
+```C#
+RevitUtils.GetCurrentUserApplicationPluginsFolder();
+RevitUtils.GetCurrentUserAddInFolder();
+RevitUtils.GetCurrentUserAddInFolder(version);
+```
+```C#
+RevitUtils.GetAllUsersApplicationPluginsFolder();
+RevitUtils.GetAllUsersAddInFolder();
+RevitUtils.GetAllUsersAddInFolder(version);
+```
+
 ## Release
 
 * [Latest release](../../releases/latest)

@@ -22,7 +22,15 @@ namespace ricaun.Revit.Installation
         /// <returns></returns>
         public static string GetAllUsersAddInFolder(int revitVersion)
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + RevitAddInFolder + revitVersion;
+            return GetAllUsersAddInFolder() + revitVersion;
+        }
+        /// <summary>
+        /// Get AllUsers AddIn Folder
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAllUsersAddInFolder()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + RevitAddInFolder;
         }
         /// <summary>
         /// Get CurrentUser AddIn Folder using <paramref name="revitVersion"/>
@@ -31,7 +39,15 @@ namespace ricaun.Revit.Installation
         /// <returns></returns>
         public static string GetCurrentUserAddInFolder(int revitVersion)
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + RevitAddInFolder + revitVersion;
+            return GetCurrentUserAddInFolder() + revitVersion;
+        }
+        /// <summary>
+        /// Get CurrentUser AddIn Folder
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCurrentUserAddInFolder()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + RevitAddInFolder;
         }
         /// <summary>
         /// Get AllUsers ApplicationPlugins Folder
