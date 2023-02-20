@@ -15,6 +15,10 @@ namespace ricaun.Revit.Installation.Tests
             foreach (var installedRevit in RevitInstallationUtils.InstalledRevit)
             {
                 Console.WriteLine(installedRevit);
+                foreach (var process in installedRevit.GetProcesses())
+                {
+                    Console.WriteLine($"\t {process} {process.Id}");
+                }
             }
         }
 
