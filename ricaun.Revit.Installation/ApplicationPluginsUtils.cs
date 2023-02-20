@@ -19,12 +19,12 @@ namespace ricaun.Revit.Installation
 
         #region Delete
         /// <summary>
-        /// DeleteBundleFiles
+        /// DeleteBundle
         /// </summary>
         /// <param name="applicationPluginsFolder"></param>
         /// <param name="bundleName"></param>
         /// <exception cref="Exception"></exception>
-        public static void DeleteBundleFiles(string applicationPluginsFolder, string bundleName)
+        public static void DeleteBundle(string applicationPluginsFolder, string bundleName)
         {
             if (bundleName.EndsWith(CONST_BUNDLE) == false)
                 throw new Exception(string.Format("BundleName {0} does not end with {0}", bundleName, CONST_BUNDLE));

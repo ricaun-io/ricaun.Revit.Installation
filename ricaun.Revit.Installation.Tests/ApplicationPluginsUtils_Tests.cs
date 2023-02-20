@@ -25,7 +25,7 @@ namespace ricaun.Revit.Installation.Tests
             Console.WriteLine($"Bundle Exists: {Directory.Exists(Path.Combine(applicationPluginsFolder, bundleName))}");
             Assert.IsTrue(Directory.Exists(Path.Combine(applicationPluginsFolder, bundleName)));
 
-            ApplicationPluginsUtils.DeleteBundleFiles(applicationPluginsFolder, bundleName);
+            ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
             Console.WriteLine($"Bundle Exists: {Directory.Exists(Path.Combine(applicationPluginsFolder, bundleName))}");
         }
     }
