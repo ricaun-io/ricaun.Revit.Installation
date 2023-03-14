@@ -67,6 +67,7 @@ namespace ricaun.Revit.Installation
         /// </summary>
         /// <param name="applicationPluginsFolder"></param>
         /// <param name="bundleZipPath"></param>
+        [Obsolete("Use DownloadBundle insted.")]
         public static void ExtractBundle(string applicationPluginsFolder, string bundleZipPath)
         {
             ExtractBundleZipToDirectory(bundleZipPath, applicationPluginsFolder);

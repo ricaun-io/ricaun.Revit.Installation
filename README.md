@@ -12,7 +12,6 @@
 ```C#
 ApplicationPluginsUtils.DownloadBundle(applicationPluginsFolder, bundleUrl);
 ApplicationPluginsUtils.DownloadBundleAsync(applicationPluginsFolder, bundleUrl);
-ApplicationPluginsUtils.ExtractBundle(applicationPluginsFolder, bundleZipPath);
 ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
 ```
 
