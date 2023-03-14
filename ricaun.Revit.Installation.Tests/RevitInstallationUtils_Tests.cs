@@ -58,7 +58,7 @@ namespace ricaun.Revit.Installation.Tests
                         Console.WriteLine($"{installedRevit}: Kill");
                     }
 
-                    //break;
+                    Thread.Sleep(5000);
                 }
             }
         }
@@ -99,6 +99,8 @@ namespace ricaun.Revit.Installation.Tests
                         process.Kill();
                         Console.WriteLine($"{installedRevit}: Kill");
                     }
+
+                    Thread.Sleep(5000);
                 }
             }
         }
