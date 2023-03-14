@@ -58,7 +58,49 @@ namespace ricaun.Revit.Installation.Tests
                         Console.WriteLine($"{installedRevit}: Kill");
                     }
 
-                    //break;
+                    Thread.Sleep(5000);
+                }
+            }
+        }
+
+        [Test]
+        public void InstalledRevit_Test_StartWithJornal()
+        {
+            var InstalledRevits = RevitInstallationUtils.InstalledRevit;
+            var installedRevit = InstalledRevits.LastOrDefault();
+            if (installedRevit is not null)
+            {
+                if (installedRevit.TryGetProcess(out Process process) == false)
+                {
+                    string workingDirectory = Path.Combine(Path.GetTempPath(), "_RevitInstallation_Test_");
+                    Directory.CreateDirectory(workingDirectory);
+                    Console.WriteLine($"{installedRevit}: StartWithJornal {workingDirectory}");
+                    var forceToExited = false;
+                    process = installedRevit.StartWithJornal(workingDirectory);
+                    process.ErrorDataReceived += (s, e) =>
+                    {
+                        Console.WriteLine(e.Data);
+                        forceToExited = true;
+                    };
+                    process.Exited += (s, e) =>
+                    {
+                        forceToExited = true;
+                    };
+
+                    for (int i = 0; i < 60; i++)
+                    {
+                        Console.WriteLine($"{installedRevit}: Wait {i}");
+                        Thread.Sleep(1000);
+                        if (forceToExited) break;
+                    }
+
+                    if (!process.HasExited)
+                    {
+                        process.Kill();
+                        Console.WriteLine($"{installedRevit}: Kill");
+                    }
+
+                    Thread.Sleep(5000);
                 }
             }
         }

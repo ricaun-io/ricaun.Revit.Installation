@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -36,6 +37,33 @@ namespace ricaun.Revit.Installation
         {
             var revitExe = Path.Combine(revitInstallation.InstallLocation, ExecuteName);
             var process = Process.Start(revitExe, arguments);
+            return process;
+        }
+
+        /// <summary>
+        /// Start RevitInstallation with Jornal in <paramref name="workingDirectory"/>.
+        /// Any .addin in the <paramref name="workingDirectory"/> gonna be loaded.
+        /// </summary>
+        /// <param name="revitInstallation"></param>
+        /// <param name="workingDirectory"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
+        public static Process StartWithJornal(this RevitInstallation revitInstallation,
+            string workingDirectory,
+            string arguments = DefaultArguments)
+        {
+            var revitExe = Path.Combine(revitInstallation.InstallLocation, ExecuteName);
+            string jornalPath = CreateJornalFile(workingDirectory);
+            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            {
+                FileName = revitExe,
+                WorkingDirectory = workingDirectory,
+                Arguments = jornalPath + " " + arguments,
+                UseShellExecute = false
+            };
+            var process = new Process();
+            process.StartInfo = processStartInfo;
+            process.Start();
             return process;
         }
 
@@ -96,6 +124,14 @@ namespace ricaun.Revit.Installation
         private static Process[] GetRevitProcesses()
         {
             return Process.GetProcessesByName(ProcessName);
+        }
+
+        private static string CreateJornalFile(string workingDirectory)
+        {
+            const string JORNAL_FILE = "journal.txt";
+            string jornalPath = Path.Combine(workingDirectory, JORNAL_FILE);
+            File.WriteAllText(jornalPath, $"'C {DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss.fff")}; \r\nDim Jrn\r\nSet Jrn = CrsJournalScript");
+            return jornalPath;
         }
         #endregion
     }
