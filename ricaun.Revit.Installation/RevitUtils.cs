@@ -81,9 +81,9 @@ namespace ricaun.Revit.Installation
 
             revitVersion = 0;
 
-            var assemblyTest = TryReflectionOnlyLoad(assemblyFile);
+            var assemblyReferences = ReferenceLoaderUtils.GetReferencedAssemblies(assemblyFile);
 
-            var revit = assemblyTest.GetReferencedAssemblies()
+            var revit = assemblyReferences
                 .FirstOrDefault(e => e.Name.StartsWith(RevitAPIName));
 
             if (revit == null) return false;
@@ -94,17 +94,6 @@ namespace ricaun.Revit.Installation
             revitVersion = version;
 
             return true;
-        }
-
-        private static Assembly TryReflectionOnlyLoad(string assemblyFile)
-        {
-            var assemblyName = AssemblyName.GetAssemblyName(assemblyFile);
-            var domain = AppDomain.CurrentDomain;
-            var assembly = domain.ReflectionOnlyGetAssemblies()
-                .FirstOrDefault(e => e.GetName().Name == assemblyName.Name);
-
-            assembly = assembly ?? Assembly.ReflectionOnlyLoad(File.ReadAllBytes(assemblyFile));
-            return assembly;
         }
         #endregion
     }

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [1.0.2] / 2023-03-16
+### Features
+- `ReferenceLoaderUtils` - Unload Domain with NETFRAMEWORK or Load Assembly bytes.
+### Tests
+- `RevitInstallationUtils_Tests`
 ### Fixed
 - `GetMainModuleFileName` change to `string.Empty` by default.
 

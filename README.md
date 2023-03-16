@@ -31,6 +31,9 @@ RevitUtils.GetAllUsersApplicationPluginsFolder();
 RevitUtils.GetAllUsersAddInFolder();
 RevitUtils.GetAllUsersAddInFolder(version);
 ```
+```C#
+RevitUtils.TryGetRevitVersion(assemblyFile, out int revitVersion);
+```
 
 ## Release
 
