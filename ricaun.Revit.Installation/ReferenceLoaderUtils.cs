@@ -25,7 +25,7 @@ namespace ricaun.Revit.Installation
             };
             var childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
 
-            var loader = childDomain.CreateInstanceAndUnwrap<ReferenceLoader>();
+            var loader = childDomain.CreateReferenceLoader();
 
             //This operation is executed in the new AppDomain
             var assemblyNames = loader.LoadReferences(assemblyPath);
@@ -35,14 +35,37 @@ namespace ricaun.Revit.Installation
             return assemblyNames;
         }
 
+        private static ReferenceLoader CreateReferenceLoader(this AppDomain domain)
+        {
+            return domain.CreateInstanceAndUnwrap<ReferenceLoader>();
+        }
+
         private static T CreateInstanceAndUnwrap<T>(this AppDomain domain, params object[] args) where T : MarshalByRefObject
         {
-            var handle = Activator.CreateInstance(domain,
-                       typeof(T).Assembly.FullName,
-                       typeof(T).FullName,
-                       false, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, args, CultureInfo.CurrentCulture, new object[0]);
+            try
+            {
+                var handle = Activator.CreateInstance(domain,
+                           typeof(T).Assembly.FullName,
+                           typeof(T).FullName,
+                           false, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, args, CultureInfo.CurrentCulture, new object[0]);
 
-            return (T)handle.Unwrap();
+                return (T)handle.Unwrap();
+            }
+            catch { }
+
+            try
+            {
+                var handle = domain.CreateInstanceFrom(
+                        typeof(T).Assembly.Location,
+                        typeof(T).FullName,
+                        false, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, args, CultureInfo.CurrentCulture, new object[0]);
+
+                return (T)handle.Unwrap();
+            }
+            catch (Exception ex)
+            {
+                throw new FileNotFoundException($"CreateInstanceFromAndUnwrap fail to CreateInstance<{typeof(T).Name}>, Location: {typeof(T).Assembly.Location}", ex);
+            }
         }
 
         /// <summary>
@@ -53,6 +76,11 @@ namespace ricaun.Revit.Installation
         /// </summary>
         public class ReferenceLoader : MarshalByRefObject
         {
+            /// <summary>
+            /// LoadReferences
+            /// </summary>
+            /// <param name="assemblyPath"></param>
+            /// <returns></returns>
             public AssemblyName[] LoadReferences(string assemblyPath)
             {
                 var assembly = Assembly.ReflectionOnlyLoadFrom(assemblyPath);
