@@ -31,12 +31,17 @@ namespace ricaun.Revit.Installation.Tests
             Assert.That(revitVersion, Is.EqualTo(0));
         }
 
-        [TestCase("Files/RevitAddin1.dll", 2017)]
+        [TestCase("Files/2017/RevitAddin1.dll", 2017)]
+        [TestCase("Files/2018/RevitAddin1.dll", 2018)]
+        [TestCase("Files/2019/RevitAddin1.dll", 2019)]
+        [TestCase("Files/2020/RevitAddin1.dll", 2020)]
+        [TestCase("Files/2021/RevitAddin1.dll", 2021)]
+        [TestCase("Files/2022/RevitAddin1.dll", 2022)]
         public void RevitUtils_Test_GetReferencesRevit(string filePath, int expectedRevitVersion)
         {
             var fileInfo = new FileInfo(filePath);
             var assemblyFile = fileInfo.FullName;
-            Console.WriteLine(assemblyFile);
+            Console.WriteLine(filePath);
             Assert.IsTrue(RevitUtils.TryGetRevitVersion(assemblyFile, out int revitVersion));
             Assert.That(revitVersion, Is.EqualTo(expectedRevitVersion));
             Console.WriteLine(revitVersion);
