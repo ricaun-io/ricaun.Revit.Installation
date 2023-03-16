@@ -69,7 +69,7 @@ namespace ricaun.Revit.Installation
 
         #region Revit Version File
         /// <summary>
-        /// TryGetRevitVersion using the RevitAPI ReferencedAssemblies
+        /// TryGetRevitVersion using <see cref="ReferenceLoaderUtils.GetReferencedAssemblies"/>
         /// </summary>
         /// <param name="assemblyFile"></param>
         /// <param name="revitVersion"></param>

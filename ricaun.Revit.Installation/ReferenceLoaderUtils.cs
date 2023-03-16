@@ -61,16 +61,13 @@ namespace ricaun.Revit.Installation
             }
         }
 #else
+        /// <summary>
+        /// GetReferencedAssemblies by Load Assembly with <see cref="File.ReadAllBytes"/>
+        /// </summary>
+        /// <param name="assemblyPath"></param>
+        /// <returns></returns>
         public static AssemblyName[] GetReferencedAssemblies(string assemblyPath)
         {
-            //var assemblyName = AssemblyName.GetAssemblyName(assemblyPath);
-            //var domain = AppDomain.CurrentDomain;
-            //var assembly = domain.ReflectionOnlyGetAssemblies()
-            //    .FirstOrDefault(e => e.GetName().Name == assemblyName.Name);
-
-            //assembly = assembly ?? Assembly.ReflectionOnlyLoad(File.ReadAllBytes(assemblyPath));
-            //return assembly.GetReferencedAssemblies();
-
             var assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             return assembly.GetReferencedAssemblies();
         }

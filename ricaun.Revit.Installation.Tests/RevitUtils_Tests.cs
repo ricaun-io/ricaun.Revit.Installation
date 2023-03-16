@@ -31,14 +31,14 @@ namespace ricaun.Revit.Installation.Tests
             Assert.That(revitVersion, Is.EqualTo(0));
         }
 
-        [Test]
-        public void RevitUtils_Test_GetReferencesRevit()
+        [TestCase("Files/RevitAddin1.dll", 2017)]
+        public void RevitUtils_Test_GetReferencesRevit(string filePath, int expectedRevitVersion)
         {
-            var fileInfo = new FileInfo("Files/RevitAddin1.dll");
+            var fileInfo = new FileInfo(filePath);
             var assemblyFile = fileInfo.FullName;
             Console.WriteLine(assemblyFile);
             Assert.IsTrue(RevitUtils.TryGetRevitVersion(assemblyFile, out int revitVersion));
-            Assert.That(revitVersion, Is.EqualTo(2017));
+            Assert.That(revitVersion, Is.EqualTo(expectedRevitVersion));
             Console.WriteLine(revitVersion);
         }
     }
