@@ -18,4 +18,10 @@
     <ProjectReference Include="..\ricaun.Revit.Installation\ricaun.Revit.Installation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\RevitAddin1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `ReferenceLoaderUtils` - Unload Domain with NETFRAMEWORK or Load Assembly bytes.
 ### Tests
 - `RevitInstallationUtils_Tests`
+- `RevitUtils_Test_GetReferencesRevit` - `RevitAddin1.dll` - Version 2017
 ### Fixed
 - `GetMainModuleFileName` change to `string.Empty` by default.
 
