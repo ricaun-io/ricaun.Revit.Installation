@@ -28,10 +28,10 @@ namespace ricaun.Revit.Installation
             {
                 return QueryFullProcessImageName(process.Handle, 0, fileNameBuilder, ref bufferLength) ?
                     fileNameBuilder.ToString() :
-                    null;
+                    string.Empty;
             }
             catch { }
-            return null;
+            return string.Empty;
         }
     }
 }
