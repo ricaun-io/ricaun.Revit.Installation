@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] / 2023-10-02
+### Features
+- Package for version `net5.0+`
+### Updated
+- Force `DownloadBundleAsync` to create `Directory` if not exist.
+- Update `ReferenceLoaderUtils` for NET and NETFRAMEWORK
+### Removed
+- Remove methods with `Obsolete` attribute
+### Tests
+- Update `ReferenceLoaderUtils_Tests` for NET and NETFRAMEWORK
+- Update `RevitInstallationUtils_Tests` count to chech string.Copy obsolete
+
 ## [1.0.3] / 2023-03-16
 ### Fixed
 - Fix `Costura` problem with `RevitInstallationUtils.CreateInstanceAndUnwrap`.
@@ -32,6 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `ricaun.Revit.Installation.Tests`
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.1.0]: ../../compare/1.0.3...1.1.0
 [1.0.3]: ../../compare/1.0.2...1.0.3
 [1.0.2]: ../../compare/1.0.1...1.0.2
 [1.0.1]: ../../compare/1.0.0...1.0.1

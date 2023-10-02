@@ -61,20 +61,6 @@ namespace ricaun.Revit.Installation
         }
         #endregion
 
-        #region Extract
-        /// <summary>
-        /// ExtractBundle from a local path
-        /// </summary>
-        /// <param name="applicationPluginsFolder"></param>
-        /// <param name="bundleZipPath"></param>
-        [Obsolete("Use DownloadBundle insted.")]
-        public static void ExtractBundle(string applicationPluginsFolder, string bundleZipPath)
-        {
-            ExtractBundleZipToDirectory(bundleZipPath, applicationPluginsFolder);
-            if (File.Exists(bundleZipPath)) File.Delete(bundleZipPath);
-        }
-        #endregion
-
         #region Download
         /// <summary>
         /// Download and unzip Bundle
@@ -101,6 +87,9 @@ namespace ricaun.Revit.Installation
         /// <returns></returns>
         public static async Task<bool> DownloadBundleAsync(string applicationPluginsFolder, string address, Action<Exception> downloadFileException = null)
         {
+            if (!Directory.Exists(applicationPluginsFolder))
+                Directory.CreateDirectory(applicationPluginsFolder);
+
             var fileName = Path.GetFileName(address);
             var zipPath = Path.Combine(applicationPluginsFolder, fileName);
             var result = false;

@@ -48,7 +48,9 @@ namespace ricaun.Revit.Installation
             uint iProductIndex;
             do
             {
-                productCodes.Add(string.Copy(code));
+                // string.Copy this is obsolete
+                // productCodes.Add(string.Copy(code));
+                productCodes.Add(new string(code.ToCharArray()));
                 iProductIndex = num;
                 num++;
             }
