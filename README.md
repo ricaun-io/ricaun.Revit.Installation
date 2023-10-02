@@ -6,6 +6,7 @@
 [![Build](../../actions/workflows/Build.yml/badge.svg)](../../actions)
 [![.NET Framework 4.5](https://img.shields.io/badge/.NET%20Framework%204.5-blue.svg)](../..)
 [![.NET Standard 2.0](https://img.shields.io/badge/-.NET%20Standard%202.0-blue)](../..)
+[![.NET 5.0](https://img.shields.io/badge/-.NET%205.0-blue)](../..)
 
 ## Features
 ### ApplicationPluginsUtils

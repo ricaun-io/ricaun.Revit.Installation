@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
 
 namespace ricaun.Revit.Installation
@@ -9,85 +6,10 @@ namespace ricaun.Revit.Installation
     /// <summary>
     /// ReferenceLoaderUtils
     /// </summary>
-    public static class ReferenceLoaderUtils
+    internal static partial class ReferenceLoaderUtils
     {
 #if NETFRAMEWORK
-        /// <summary>
-        /// Get references of the <paramref name="assemblyPath"/> using a diferent AppDomain
-        /// </summary>
-        /// <param name="assemblyPath"></param>
-        /// <returns></returns>
-        public static AssemblyName[] GetReferencedAssemblies(string assemblyPath)
-        {
-            var settings = new AppDomainSetup
-            {
-                ApplicationBase = AppDomain.CurrentDomain.BaseDirectory,
-            };
-            var childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
-
-            var loader = childDomain.CreateReferenceLoader();
-
-            //This operation is executed in the new AppDomain
-            var assemblyNames = loader.LoadReferences(assemblyPath);
-
-            AppDomain.Unload(childDomain);
-
-            return assemblyNames;
-        }
-
-        private static ReferenceLoader CreateReferenceLoader(this AppDomain domain)
-        {
-            return domain.CreateInstanceAndUnwrap<ReferenceLoader>();
-        }
-
-        private static T CreateInstanceAndUnwrap<T>(this AppDomain domain, params object[] args) where T : MarshalByRefObject
-        {
-            try
-            {
-                var handle = Activator.CreateInstance(domain,
-                           typeof(T).Assembly.FullName,
-                           typeof(T).FullName,
-                           false, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, args, CultureInfo.CurrentCulture, new object[0]);
-
-                return (T)handle.Unwrap();
-            }
-            catch { }
-
-            try
-            {
-                var handle = domain.CreateInstanceFrom(
-                        typeof(T).Assembly.Location,
-                        typeof(T).FullName,
-                        false, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, args, CultureInfo.CurrentCulture, new object[0]);
-
-                return (T)handle.Unwrap();
-            }
-            catch (Exception ex)
-            {
-                throw new FileNotFoundException($"CreateInstanceFromAndUnwrap fail to CreateInstance<{typeof(T).Name}>, Location: {typeof(T).Assembly.Location}", ex);
-            }
-        }
-
-        /// <summary>
-        /// ReferenceLoader
-        /// <code>
-        /// https://stackoverflow.com/questions/225330/how-to-load-a-net-assembly-for-reflection-operations-and-subsequently-unload-it/37970043#37970043
-        /// </code>
-        /// </summary>
-        public class ReferenceLoader : MarshalByRefObject
-        {
-            /// <summary>
-            /// LoadReferences
-            /// </summary>
-            /// <param name="assemblyPath"></param>
-            /// <returns></returns>
-            public AssemblyName[] LoadReferences(string assemblyPath)
-            {
-                var assembly = Assembly.ReflectionOnlyLoadFrom(assemblyPath);
-                var assemblyNames = assembly.GetReferencedAssemblies().ToArray();
-                return assemblyNames;
-            }
-        }
+#elif NET
 #else
         /// <summary>
         /// GetReferencedAssemblies by Load Assembly with <see cref="File.ReadAllBytes"/>
@@ -96,9 +18,18 @@ namespace ricaun.Revit.Installation
         /// <returns></returns>
         public static AssemblyName[] GetReferencedAssemblies(string assemblyPath)
         {
+            return GetReferencedAssembliesDefault(assemblyPath);
+        }
+#endif
+        /// <summary>
+        /// GetReferencedAssemblies by Load Assembly with <see cref="File.ReadAllBytes"/>
+        /// </summary>
+        /// <param name="assemblyPath"></param>
+        /// <returns></returns>
+        internal static AssemblyName[] GetReferencedAssembliesDefault(string assemblyPath)
+        {
             var assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             return assembly.GetReferencedAssemblies();
         }
-#endif
     }
 }

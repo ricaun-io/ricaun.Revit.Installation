@@ -10,6 +10,17 @@ namespace ricaun.Revit.Installation.Tests
     public class RevitInstallationUtils_Tests
     {
         [Test]
+        public void InstalledRevit_Test_Count()
+        {
+            foreach (var installedRevit in RevitInstallationUtils.InstalledRevit)
+            {
+                var count = RevitInstallationUtils.InstalledRevit.Count(e => e.Version == installedRevit.Version);
+                Console.WriteLine($"{installedRevit} : {count}");
+                Assert.That(count, Is.EqualTo(1));
+            }
+        }
+
+        [Test]
         public void InstalledRevit_Test_Show()
         {
             foreach (var installedRevit in RevitInstallationUtils.InstalledRevit)

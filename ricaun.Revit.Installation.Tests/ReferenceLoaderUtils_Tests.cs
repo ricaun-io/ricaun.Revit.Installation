@@ -32,5 +32,20 @@ namespace ricaun.Revit.Installation.Tests
             }
             Assert.Zero(AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies().Length);
         }
+
+        [Test]
+        public void ReferenceLoaderUtils_Tests_GetReferencesRepeat_Assemblies()
+        {
+            var assemblyFile = Assembly.GetExecutingAssembly().Location;
+            var startWith = AppDomain.CurrentDomain.GetAssemblies().Length;
+            for (int i = 0; i < 5; i++)
+            {
+                var names = ReferenceLoaderUtils.GetReferencedAssemblies(assemblyFile);
+                Assert.IsNotNull(names.FirstOrDefault(e => e.Name.StartsWith("nunit.framework")));
+                Assert.IsNotNull(names.FirstOrDefault(e => e.Name.StartsWith("ricaun.Revit.Installation")));
+            }
+            var endWith = AppDomain.CurrentDomain.GetAssemblies().Length;
+            Assert.Zero(endWith - startWith);
+        }
     }
 }

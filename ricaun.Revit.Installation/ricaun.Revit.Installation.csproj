@@ -2,7 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0;net5.0</TargetFrameworks>
+    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
     <OutputType>Library</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>latest</LangVersion>
@@ -16,7 +17,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants></DefineConstants>
-    <NoWarn>MSB3052</NoWarn>
+    <NoWarn>$(NoWarn);MSB3052</NoWarn>
     <DebugType>None</DebugType>
   </PropertyGroup>
 
@@ -30,7 +31,7 @@
 
   <PropertyGroup>
     <PackageId>ricaun.Revit.Installation</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.1.0</Version>
     <ProjectGuid>{A6D57EEA-04DE-4F12-951E-481C6861C9F8}</ProjectGuid>
   </PropertyGroup>
 
@@ -64,6 +65,7 @@
     <RepositoryUrl>https://github.com/$(GitHubRepositoryOwner)/$(PackageId)</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIconUrl />
   </PropertyGroup>
 
