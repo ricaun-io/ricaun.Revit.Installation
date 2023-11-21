@@ -1,0 +1,55 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "RevitAddin24/1.0.0": {
+        "dependencies": {
+          "PropertyChanged.Fody": "3.4.1",
+          "Revit_All_Main_Versions_API_x64": "2025.0.0"
+        },
+        "runtime": {
+          "RevitAddin24.dll": {}
+        }
+      },
+      "Fody/6.6.2": {},
+      "PropertyChanged.Fody/3.4.1": {
+        "dependencies": {
+          "Fody": "6.6.2"
+        }
+      },
+      "Revit_All_Main_Versions_API_x64/2025.0.0": {}
+    }
+  },
+  "libraries": {
+    "RevitAddin24/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fody/6.6.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/PISk/t+lnNm0tiAc3xer3wp7HVnDCkX7gyTzljbC9kygUBJpYU2V1P/MjJeu/C6JhR40QXr9XdoxvqRmaHlhg==",
+      "path": "fody/6.6.2",
+      "hashPath": "fody.6.6.2.nupkg.sha512"
+    },
+    "PropertyChanged.Fody/3.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-e0BVdf9bFdjvOMEcYff5jUdvMC36ioHN1Lp7bW1bz0Qjg3rqsfCUhaaIu+K7R9TKBGeX7PlfqAeMqKyrD9cBXw==",
+      "path": "propertychanged.fody/3.4.1",
+      "hashPath": "propertychanged.fody.3.4.1.nupkg.sha512"
+    },
+    "Revit_All_Main_Versions_API_x64/2025.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q/VzBTyDnPov1hFeArE/bQmh102MkPJH9XFOm9RmCPVXgADDEiGY/+ReuZDZ8XPfZKmPGV/NjiktA0W3xknaEg==",
+      "path": "revit_all_main_versions_api_x64/2025.0.0",
+      "hashPath": "revit_all_main_versions_api_x64.2025.0.0.nupkg.sha512"
+    }
+  }
+}

@@ -21,6 +21,8 @@ namespace ricaun.Revit.Installation
             }
         }
 
+        private const string REVIT_COMPONENT = "{1C685B70-BF48-4E33-BCB8-32E56CF31A2C}";
+
         #region private
         private static RevitInstallation[] _installedRevit;
         [DllImport("msi.dll", CharSet = CharSet.Unicode)]
@@ -38,7 +40,7 @@ namespace ricaun.Revit.Installation
         {
             List<string> productCodes = new List<string>();
             string code = new string(' ', 38);
-            string component = "{DF7D485F-B8BA-448E-A444-E6FB1C258912}";
+            string component = REVIT_COMPONENT;
             uint num = 1u;
             if (MsiEnumClients(component, 0u, code) != 0)
             {
