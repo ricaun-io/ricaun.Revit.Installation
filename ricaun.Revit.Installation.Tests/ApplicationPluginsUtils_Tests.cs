@@ -20,6 +20,8 @@ namespace ricaun.Revit.Installation.Tests
             {
                 Console.WriteLine(e);
                 Assert.Fail(e.Message);
+            }, (log) => {
+                Console.WriteLine(log);
             });
 
             Console.WriteLine($"Bundle Exists: {Directory.Exists(Path.Combine(applicationPluginsFolder, bundleName))}");

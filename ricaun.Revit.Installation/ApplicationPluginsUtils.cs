@@ -68,12 +68,13 @@ namespace ricaun.Revit.Installation
         /// <param name="applicationPluginsFolder">Folder of the ApplicationPlugins or the Application.bundle</param>
         /// <param name="address"></param>
         /// <param name="downloadFileException"></param>
+        /// <param name="logFileConsole"></param>
         /// <returns></returns>
-        public static bool DownloadBundle(string applicationPluginsFolder, string address, Action<Exception> downloadFileException = null)
+        public static bool DownloadBundle(string applicationPluginsFolder, string address, Action<Exception> downloadFileException = null, Action<string> logFileConsole = null)
         {
             var task = Task.Run(async () =>
             {
-                return await DownloadBundleAsync(applicationPluginsFolder, address, downloadFileException);
+                return await DownloadBundleAsync(applicationPluginsFolder, address, downloadFileException, logFileConsole);
             });
             return task.GetAwaiter().GetResult();
         }
@@ -84,8 +85,9 @@ namespace ricaun.Revit.Installation
         /// <param name="applicationPluginsFolder">Folder of the ApplicationPlugins or the Application.bundle</param>
         /// <param name="address"></param>
         /// <param name="downloadFileException"></param>
+        /// <param name="logFileConsole"></param>
         /// <returns></returns>
-        public static async Task<bool> DownloadBundleAsync(string applicationPluginsFolder, string address, Action<Exception> downloadFileException = null)
+        public static async Task<bool> DownloadBundleAsync(string applicationPluginsFolder, string address, Action<Exception> downloadFileException = null, Action<string> logFileConsole = null)
         {
             if (!Directory.Exists(applicationPluginsFolder))
                 Directory.CreateDirectory(applicationPluginsFolder);
@@ -101,7 +103,7 @@ namespace ricaun.Revit.Installation
                 try
                 {
                     await client.DownloadFileTaskAsync(new Uri(address), zipPath);
-                    ExtractBundleZipToDirectory(zipPath, applicationPluginsFolder);
+                    ExtractBundleZipToDirectory(zipPath, applicationPluginsFolder, downloadFileException, logFileConsole);
                     result = true;
                 }
                 catch (Exception ex)
@@ -121,7 +123,9 @@ namespace ricaun.Revit.Installation
         /// </summary>
         /// <param name="archiveFileName"></param>
         /// <param name="destinationDirectoryName"></param>
-        private static void ExtractBundleZipToDirectory(string archiveFileName, string destinationDirectoryName)
+        /// <param name="extractFileException"></param>
+        /// <param name="logFileConsole"></param>
+        private static void ExtractBundleZipToDirectory(string archiveFileName, string destinationDirectoryName, Action<Exception> extractFileException = null, Action<string> logFileConsole = null)
         {
             if (Path.GetExtension(archiveFileName) != ".zip") return;
 
@@ -146,11 +150,23 @@ namespace ricaun.Revit.Installation
 
                     Debug.WriteLine($"{fileFullName} |\t {baseDirectory} |\t {completeFileName}");
 
+                    logFileConsole?.Invoke($"{fileFullName} |\t {baseDirectory} |\t {completeFileName}");
+
                     if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
                         Directory.CreateDirectory(directory);
 
                     if (file.Name != "")
-                        file.ExtractToFile(completeFileName, true);
+                    {
+                        try
+                        {
+                            file.ExtractToFile(completeFileName, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (extractFileException is null) throw;
+                            extractFileException.Invoke(ex);
+                        }
+                    }
                 }
             }
 

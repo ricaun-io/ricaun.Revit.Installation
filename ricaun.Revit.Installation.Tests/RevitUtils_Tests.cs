@@ -40,8 +40,8 @@ namespace ricaun.Revit.Installation.Tests
         [TestCase("Files/2025/RevitAddin24.dll", 2025)]
         public void RevitUtils_Test_GetReferencesRevit(string filePath, int expectedRevitVersion)
         {
-            var fileInfo = new FileInfo(filePath);
-            var assemblyFile = fileInfo.FullName;
+            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var assemblyFile = Path.Combine(directory,filePath);
             Console.WriteLine(filePath);
             Assert.IsTrue(RevitUtils.TryGetRevitVersion(assemblyFile, out int revitVersion));
             Console.WriteLine(revitVersion);
