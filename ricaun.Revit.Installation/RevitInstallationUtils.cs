@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using ricaun.Revit.Installation.Utils;
 
 namespace ricaun.Revit.Installation
@@ -54,56 +51,6 @@ namespace ricaun.Revit.Installation
                 .Select(ToRevitInstallation)
                 .OrderBy(e => e.Version);
         }
-
-        //[DllImport("msi.dll", CharSet = CharSet.Unicode)]
-        //private static extern uint MsiEnumClients(string szComponent, uint iProductIndex, string lpProductBuf);
-        //[DllImport("msi.dll", CharSet = CharSet.Unicode)]
-        //private static extern int MsiGetProductInfo(string product, string property, string valueBuf, out int len);
-        //private static string MsiGetProductInfo(string product, string property)
-        //{
-        //    int len = 250;
-        //    string valueBuf = new string(' ', len);
-        //    MsiGetProductInfo(product, property, valueBuf, out len);
-        //    return valueBuf.Substring(0, len);
-        //}
-        //private static IEnumerable<string> GetInstalledRevitProductCodes(string component = null)
-        //{
-        //    List<string> productCodes = new List<string>();
-        //    string code = new string(' ', 38);
-        //    component = component ?? REVIT_COMPONENT;
-        //    uint num = 1u;
-        //    if (MsiEnumClients(component, 0u, code) != 0)
-        //    {
-        //        return productCodes;
-        //    }
-
-        //    uint iProductIndex;
-        //    do
-        //    {
-        //        // string.Copy this is obsolete
-        //        // productCodes.Add(string.Copy(code));
-        //        productCodes.Add(new string(code.ToCharArray()));
-        //        iProductIndex = num;
-        //        num++;
-        //    }
-        //    while (MsiEnumClients(component, iProductIndex, code) == 0);
-        //    return productCodes;
-        //}
-        //private static IEnumerable<RevitInstallation> GetRevitInstallationCodes(string component = null)
-        //{
-        //    var regex = new Regex("^(\\{{0,1}(7346B4A[0-9a-fA-F])-(?<Majorversion>([0-9a-fA-F]){2})(?<Subversion>([0-9a-fA-F]){2})-(?<Discipline>([0-9a-fA-F]){2})(?<Platform>([0-9a-fA-F]){1})[0-9a-fA-F]-(?<Language>([0-9a-fA-F]){4})-705C0D862004\\}{0,1})$");
-        //    return GetInstalledRevitProductCodes(component).Select(code =>
-        //    {
-        //        Match match = regex.Match(code);
-        //        if (!match.Success)
-        //            return null;
-
-        //        var version = int.Parse(match.Result("${Majorversion}")) + 2000;
-        //        var installLocation = MsiGetProductInfo(code, "InstallLocation");
-
-        //        return new RevitInstallation(installLocation, version);
-        //    }).OfType<RevitInstallation>().OrderBy(e => e.Version);
-        //}
         #endregion
     }
 }
