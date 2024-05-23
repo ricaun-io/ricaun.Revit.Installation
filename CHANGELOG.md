@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] / 2024-05-23
+### Fixed
+- Fix Revit not loading `.bundle` files properly when is already open. (Fix #7)
+### Updated
+- Update `ApplicationPluginsUtils` to reverse extract bundle files.
+- Update `RevitInstallationUtils` to expose `GetRevitInstallations` with string component.
+
 ## [1.1.2] / 2024-04-02
 ### Updated
 - Update `ApplicationPluginsUtils` with `Exception` and `Log`.
@@ -56,6 +63,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `ricaun.Revit.Installation.Tests`
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.2.0]: ../../compare/1.1.2...1.2.0
 [1.1.2]: ../../compare/1.1.1...1.1.2
 [1.1.1]: ../../compare/1.1.0...1.1.1
 [1.1.0]: ../../compare/1.0.3...1.1.0

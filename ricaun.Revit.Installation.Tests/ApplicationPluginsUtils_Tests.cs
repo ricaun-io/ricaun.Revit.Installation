@@ -10,7 +10,9 @@ namespace ricaun.Revit.Installation.Tests
         [Test]
         public void ApplicationPluginsUtils_Test_Download()
         {
-            var bundleUrl = @"https://github.com/ricaun-io/ricaun.Revit.Github/releases/latest/download/ricaun.Revit.Github.Example.bundle.zip";
+            var projectName = "RevitAddin.DA.Tester";
+            var bundleUrl = $@"https://github.com/ricaun-io/{projectName}/releases/latest/download/{projectName}.bundle.zip";
+
             var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
             var bundleName = Path.GetFileNameWithoutExtension(bundleUrl);
 
@@ -26,6 +28,8 @@ namespace ricaun.Revit.Installation.Tests
 
             Console.WriteLine($"Bundle Exists: {Directory.Exists(Path.Combine(applicationPluginsFolder, bundleName))}");
             Assert.IsTrue(Directory.Exists(Path.Combine(applicationPluginsFolder, bundleName)));
+
+            Thread.Sleep(1000);
 
             ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
             Console.WriteLine($"Bundle Exists: {Directory.Exists(Path.Combine(applicationPluginsFolder, bundleName))}");

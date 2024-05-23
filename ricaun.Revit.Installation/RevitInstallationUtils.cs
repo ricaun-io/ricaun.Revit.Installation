@@ -17,8 +17,18 @@ namespace ricaun.Revit.Installation
         {
             get
             {
-                return _installedRevit ?? (_installedRevit = GetRevitInstallationCodes().ToArray());
+                return _installedRevit ?? (_installedRevit = GetRevitInstallations());
             }
+        }
+
+        /// <summary>
+        /// Get RevitInstallations using a <paramref name="componentGuid"/> or all RevitInstallations
+        /// </summary>
+        /// <param name="componentGuid"></param>
+        /// <returns></returns>
+        public static RevitInstallation[] GetRevitInstallations(string componentGuid = null)
+        {
+            return GetRevitInstallationCodes(componentGuid).ToArray();
         }
 
         private const string REVIT_COMPONENT = "{1C685B70-BF48-4E33-BCB8-32E56CF31A2C}";
@@ -36,11 +46,11 @@ namespace ricaun.Revit.Installation
             MsiGetProductInfo(product, property, valueBuf, out len);
             return valueBuf.Substring(0, len);
         }
-        private static IEnumerable<string> GetInstalledRevitProductCodes()
+        private static IEnumerable<string> GetInstalledRevitProductCodes(string component = null)
         {
             List<string> productCodes = new List<string>();
             string code = new string(' ', 38);
-            string component = REVIT_COMPONENT;
+            component = component ?? REVIT_COMPONENT;
             uint num = 1u;
             if (MsiEnumClients(component, 0u, code) != 0)
             {
@@ -59,10 +69,10 @@ namespace ricaun.Revit.Installation
             while (MsiEnumClients(component, iProductIndex, code) == 0);
             return productCodes;
         }
-        private static IEnumerable<RevitInstallation> GetRevitInstallationCodes()
+        private static IEnumerable<RevitInstallation> GetRevitInstallationCodes(string component = null)
         {
             var regex = new Regex("^(\\{{0,1}(7346B4A[0-9a-fA-F])-(?<Majorversion>([0-9a-fA-F]){2})(?<Subversion>([0-9a-fA-F]){2})-(?<Discipline>([0-9a-fA-F]){2})(?<Platform>([0-9a-fA-F]){1})[0-9a-fA-F]-(?<Language>([0-9a-fA-F]){4})-705C0D862004\\}{0,1})$");
-            return GetInstalledRevitProductCodes().Select(code =>
+            return GetInstalledRevitProductCodes(component).Select(code =>
             {
                 Match match = regex.Match(code);
                 if (!match.Success)

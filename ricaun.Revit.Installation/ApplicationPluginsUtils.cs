@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -126,6 +127,56 @@ namespace ricaun.Revit.Installation
         /// <param name="extractFileException"></param>
         /// <param name="logFileConsole"></param>
         private static void ExtractBundleZipToDirectory(string archiveFileName, string destinationDirectoryName, Action<Exception> extractFileException = null, Action<string> logFileConsole = null)
+        {
+            if (Path.GetExtension(archiveFileName) != ".zip") return;
+
+            // If destination does not have .bundle in the end
+            if (destinationDirectoryName.EndsWith(CONST_BUNDLE) == false)
+                destinationDirectoryName = Path.Combine(destinationDirectoryName, Path.GetFileNameWithoutExtension(archiveFileName));
+
+            using (var archive = ZipFile.OpenRead(archiveFileName))
+            {
+                string baseDirectory = null;
+
+                // Check if first file is inside the bundle folder, to ignore when extract.
+                var firstFile = archive.Entries.FirstOrDefault();
+                if (firstFile is not null)
+                {
+                    var firstDirectory = Path.GetDirectoryName(firstFile.FullName);
+                    if (firstDirectory.EndsWith(CONST_BUNDLE, StringComparison.InvariantCultureIgnoreCase))
+                        baseDirectory = firstDirectory;
+                }
+
+                foreach (var file in archive.Entries.Reverse())
+                {
+                    var fileFullName = file.FullName.Substring(baseDirectory.Length).TrimStart('/');
+
+                    var completeFileName = Path.Combine(destinationDirectoryName, fileFullName);
+                    var directory = Path.GetDirectoryName(completeFileName);
+
+                    Debug.WriteLine($"{fileFullName} |\t {baseDirectory} |\t {completeFileName}");
+
+                    logFileConsole?.Invoke($"{fileFullName} |\t {baseDirectory} |\t {completeFileName}");
+
+                    if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
+                        Directory.CreateDirectory(directory);
+
+                    if (file.Name != "")
+                    {
+                        try
+                        {
+                            file.ExtractToFile(completeFileName, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (extractFileException is null) throw;
+                            extractFileException.Invoke(ex);
+                        }
+                    }
+                }
+            }
+        }
+        private static void ExtractBundleZipToDirector2y(string archiveFileName, string destinationDirectoryName, Action<Exception> extractFileException = null, Action<string> logFileConsole = null)
         {
             if (Path.GetExtension(archiveFileName) != ".zip") return;
 

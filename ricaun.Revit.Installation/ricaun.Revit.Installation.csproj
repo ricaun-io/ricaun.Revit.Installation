@@ -31,7 +31,7 @@
 
   <PropertyGroup>
     <PackageId>ricaun.Revit.Installation</PackageId>
-    <Version>1.1.2</Version>
+    <Version>1.2.0-alpha</Version>
     <ProjectGuid>{A6D57EEA-04DE-4F12-951E-481C6861C9F8}</ProjectGuid>
   </PropertyGroup>
 
