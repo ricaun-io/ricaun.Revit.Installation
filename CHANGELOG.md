@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ApplicationPluginsUtils` to reverse extract bundle files.
 - Update `RevitInstallationUtils` to expose `GetRevitInstallations` with string component.
 - Update `RevitInstallationUtils` to use `ProductInfoUtils` to get `ProductInfo`.
+### Tests
+- Test `ProductInfoUtils`.
 
 ## [1.1.2] / 2024-04-02
 ### Updated
