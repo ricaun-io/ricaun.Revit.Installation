@@ -8,14 +8,14 @@ namespace ricaun.Revit.Installation.Tests
     public class ProductInfoUtils_Tests
     {
         [Test]
-        public void ProductInfoUtils_Test_GetProductCodes()
+        public void Test_GetProductCodes()
         {
             var productCodes = ProductInfoUtils.GetProductCodes();
             Assert.IsTrue(productCodes.Any());
         }
 
         [Test]
-        public void GetProductInfos_IsNotEqual()
+        public void Test_GetProductInfos_IsNotEqual()
         {
             var productInfos = ProductInfoUtils.GetProductInfos().OrderBy(e=>e.ToString());
 
@@ -26,7 +26,7 @@ namespace ricaun.Revit.Installation.Tests
         }
 
         [Test]
-        public void Test_GetProductInfo()
+        public void GetProductInfo_Show()
         {
             var productInfos = ProductInfoUtils.GetProductInfos();
             foreach (var productInfo in productInfos.ToArray().Take(1))
@@ -37,7 +37,7 @@ namespace ricaun.Revit.Installation.Tests
         }
 
         [TestCase("Autodesk")]
-        public void Test_GetProductInfo_Publisher(string publisher)
+        public void GetProductInfo_Publisher(string publisher)
         {
             var productInfos = ProductInfoUtils.GetProductInfos();
             foreach (var productInfo in productInfos.Where(e => e.Publisher == publisher))
@@ -48,7 +48,7 @@ namespace ricaun.Revit.Installation.Tests
 
         [TestCase("Autodesk", "Revit")]
         [TestCase("Autodesk", "AutoCAD")]
-        public void Test_GetProductInfo_PublisherProductName(string publisher, string productNameStarts)
+        public void GetProductInfo_PublisherProductName(string publisher, string productNameStarts)
         {
             var productInfos = ProductInfoUtils.GetProductInfos();
             foreach (var productInfo in productInfos.Where(e => e.Publisher == publisher && e.ProductName.StartsWith(productNameStarts)))
@@ -60,7 +60,7 @@ namespace ricaun.Revit.Installation.Tests
         }
 
         [TestCase("705C0D862004")]
-        public void Test_GetProductInfo_ProductCode(string productCodeContains)
+        public void GetProductInfo_ProductCode(string productCodeContains)
         {
             var productInfos = ProductInfoUtils.GetProductInfos();
             foreach (var productInfo in productInfos.Where(e => e.ProductCode.Contains(productCodeContains)).OrderBy(e => e.ProductName))
@@ -71,7 +71,7 @@ namespace ricaun.Revit.Installation.Tests
 
         [TestCase("{DF7D485F-B8BA-448E-A444-E6FB1C258912}")]
         [TestCase("{1C685B70-BF48-4E33-BCB8-32E56CF31A2C}")]
-        public void Test_GetProductInfo_Component(string szComponent)
+        public void GetProductInfo_Component(string szComponent)
         {
             var productInfos = ProductInfoUtils.GetProductInfos(szComponent);
             foreach (var productInfo in productInfos.OrderBy(e=>e.ProductName))
@@ -89,7 +89,7 @@ namespace ricaun.Revit.Installation.Tests
         }
 
         [Test]
-        public void ProductInfoUtils_Test_GetProductInfo()
+        public void Internal_GetProductInfo()
         {
             var productCodes = ProductInfoUtils.GetProductCodes();
             foreach (var productCode in productCodes)
