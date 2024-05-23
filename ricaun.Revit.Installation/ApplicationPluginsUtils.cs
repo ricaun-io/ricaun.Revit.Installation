@@ -176,52 +176,6 @@ namespace ricaun.Revit.Installation
                 }
             }
         }
-        private static void ExtractBundleZipToDirector2y(string archiveFileName, string destinationDirectoryName, Action<Exception> extractFileException = null, Action<string> logFileConsole = null)
-        {
-            if (Path.GetExtension(archiveFileName) != ".zip") return;
-
-            // If destination does not have .bundle in the end
-            if (destinationDirectoryName.EndsWith(CONST_BUNDLE) == false)
-                destinationDirectoryName = Path.Combine(destinationDirectoryName, Path.GetFileNameWithoutExtension(archiveFileName));
-
-            using (var archive = ZipFile.OpenRead(archiveFileName))
-            {
-                string baseDirectory = null;
-                foreach (var file in archive.Entries)
-                {
-                    if (baseDirectory == null)
-                        baseDirectory = Path.GetDirectoryName(file.FullName);
-                    if (baseDirectory.EndsWith(CONST_BUNDLE) == false)
-                        baseDirectory = "";
-
-                    var fileFullName = file.FullName.Substring(baseDirectory.Length).TrimStart('/');
-
-                    var completeFileName = Path.Combine(destinationDirectoryName, fileFullName);
-                    var directory = Path.GetDirectoryName(completeFileName);
-
-                    Debug.WriteLine($"{fileFullName} |\t {baseDirectory} |\t {completeFileName}");
-
-                    logFileConsole?.Invoke($"{fileFullName} |\t {baseDirectory} |\t {completeFileName}");
-
-                    if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
-                        Directory.CreateDirectory(directory);
-
-                    if (file.Name != "")
-                    {
-                        try
-                        {
-                            file.ExtractToFile(completeFileName, true);
-                        }
-                        catch (Exception ex)
-                        {
-                            if (extractFileException is null) throw;
-                            extractFileException.Invoke(ex);
-                        }
-                    }
-                }
-            }
-
-        }
         #endregion
     }
 }
