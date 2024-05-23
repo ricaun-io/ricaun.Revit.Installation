@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace ricaun.Revit.Installation
+namespace ricaun.Revit.Installation.Utils
 {
     /// <summary>
     /// ReferenceLoaderUtils
