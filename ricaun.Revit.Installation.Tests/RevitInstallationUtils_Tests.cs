@@ -34,6 +34,19 @@ namespace ricaun.Revit.Installation.Tests
         }
 
         [Test]
+        public void InstalledRevit_Test_Show_NoCompornent()
+        {
+            foreach (var installedRevit in RevitInstallationUtils.GetRevitInstallations())
+            {
+                Console.WriteLine(installedRevit);
+                foreach (var process in installedRevit.GetProcesses())
+                {
+                    Console.WriteLine($"\t {process} {process.Id}");
+                }
+            }
+        }
+
+        [Test]
         [Explicit]
         public void InstalledRevit_Test_Start()
         {

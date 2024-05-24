@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -136,13 +137,18 @@ namespace ricaun.Revit.Installation
             using (var archive = ZipFile.OpenRead(archiveFileName))
             {
                 string baseDirectory = null;
-                foreach (var file in archive.Entries)
-                {
-                    if (baseDirectory == null)
-                        baseDirectory = Path.GetDirectoryName(file.FullName);
-                    if (baseDirectory.EndsWith(CONST_BUNDLE) == false)
-                        baseDirectory = "";
 
+                // Check if first file is inside the bundle folder, to ignore when extract.
+                var firstFile = archive.Entries.FirstOrDefault();
+                if (firstFile is not null)
+                {
+                    var firstDirectory = Path.GetDirectoryName(firstFile.FullName);
+                    if (firstDirectory.EndsWith(CONST_BUNDLE, StringComparison.InvariantCultureIgnoreCase))
+                        baseDirectory = firstDirectory;
+                }
+
+                foreach (var file in archive.Entries.Reverse())
+                {
                     var fileFullName = file.FullName.Substring(baseDirectory.Length).TrimStart('/');
 
                     var completeFileName = Path.Combine(destinationDirectoryName, fileFullName);
@@ -169,7 +175,6 @@ namespace ricaun.Revit.Installation
                     }
                 }
             }
-
         }
         #endregion
     }

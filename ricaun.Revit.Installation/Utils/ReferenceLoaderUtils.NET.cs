@@ -1,4 +1,4 @@
-﻿namespace ricaun.Revit.Installation
+﻿namespace ricaun.Revit.Installation.Utils
 {
 #if NET
     using System;

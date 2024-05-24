@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ricaun.Revit.Installation
+namespace ricaun.Revit.Installation.Utils
 {
     /// <summary>
     /// ProcessExtension
