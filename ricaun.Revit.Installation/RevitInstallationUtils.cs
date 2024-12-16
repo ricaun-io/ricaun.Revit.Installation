@@ -16,7 +16,7 @@ namespace ricaun.Revit.Installation
         {
             get
             {
-                return _installedRevit ?? (_installedRevit = GetRevitInstallations(REVIT_COMPONENT));
+                return _installedRevit ?? (_installedRevit = GetRevitInstallations());
             }
         }
 
@@ -31,7 +31,6 @@ namespace ricaun.Revit.Installation
         }
 
         #region private
-        private const string REVIT_COMPONENT = "{1C685B70-BF48-4E33-BCB8-32E56CF31A2C}";
         private static RevitInstallation[] _installedRevit;
 
         private static bool IsRevit(ProductInfo productInfo)
