@@ -48,6 +48,7 @@ namespace ricaun.Revit.Installation.Tests
 
         [Test]
         [Explicit]
+        [Ignore("This test will start Revit")]
         public void InstalledRevit_Test_Start()
         {
             var InstalledRevits = RevitInstallationUtils.InstalledRevit;
@@ -90,6 +91,7 @@ namespace ricaun.Revit.Installation.Tests
 
         [Test]
         [Explicit]
+        [Ignore("This test will start Revit")]
         public void InstalledRevit_Test_StartWithJornal()
         {
             var InstalledRevits = RevitInstallationUtils.InstalledRevit;
