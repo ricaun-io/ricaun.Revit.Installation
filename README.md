@@ -23,7 +23,28 @@ ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
 `RevitInstallationUtils` provides tools to get the installed Revit versions location in the machine.
 
 ```C#
-RevitInstallationUtils.InstalledRevit;
+RevitInstallation[] revitInstallations = RevitInstallationUtils.InstalledRevit;
+```
+
+#### RevitInstallationExtension
+
+`RevitInstallation` provides the Revit installation information.
+
+```C#
+revitInstallations.TryGetRevitInstallation(revitVersion, out RevitInstallation revitInstallation);
+revitInstallations.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation);
+```
+
+With `RevitInstallation` is possible to open the Revit application or find the `Revit.exe` process.
+
+```C#
+revitInstallation.TryGetProcess(out Process process);
+```
+```C#
+Process[] revitProcesses = revitInstallation.GetProcesses();
+```
+```C#
+Process revitProcess = revitInstallation.Start();
 ```
 
 ### RevitUtils
@@ -49,11 +70,12 @@ RevitUtils.GetAllUsersAddInFolder(version);
 RevitUtils.TryGetRevitVersion(assemblyFile, out int revitVersion);
 ```
 
-### ProductInfoUtils
+### Utils
+#### ProductInfoUtils
 
 `ProductInfoUtils` provides tools all installation in the machine as a `ProductInfo` class.
 ```C#
-ProductInfoUtils.GetProductInfos();
+IEnumerable<ProductInfo> = ProductInfoUtils.GetProductInfos();
 ```
 
 ## Release
