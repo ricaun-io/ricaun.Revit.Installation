@@ -6,19 +6,30 @@
 [![Build](https://github.com/ricaun-io/ricaun.Revit.Installation/actions/workflows/Build.yml/badge.svg)](https://github.com/ricaun-io/ricaun.Revit.Installation/actions)
 [![nuget](https://img.shields.io/nuget/v/ricaun.Revit.Installation?logo=nuget&label=nuget&color=blue)](https://www.nuget.org/packages/ricaun.Revit.Installation)
 
+This library provides tools to easily interact with the Revit installation folder and manage `ApplicationPlugins`.
+
 ## Features
 ### ApplicationPluginsUtils
+
+`ApplicationPluginsUtils` provides tools to download `.bundle.zip` application and install/unistall in the `applicationPluginsFolder`.
+
 ```C#
 ApplicationPluginsUtils.DownloadBundle(applicationPluginsFolder, bundleUrl);
 ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
 ```
 
 ### RevitInstallationUtils
+
+`RevitInstallationUtils` provides tools to get the installed Revit versions location in the machine.
+
 ```C#
 RevitInstallationUtils.InstalledRevit;
 ```
 
 ### RevitUtils
+
+`RevitUtils` provides tools to get the `ApplicationPlugins` and `Addin` folder.
+
 ```C#
 RevitUtils.GetCurrentUserApplicationPluginsFolder();
 RevitUtils.GetCurrentUserAddInFolder();
@@ -29,6 +40,11 @@ RevitUtils.GetAllUsersApplicationPluginsFolder();
 RevitUtils.GetAllUsersAddInFolder();
 RevitUtils.GetAllUsersAddInFolder(version);
 ```
+
+### TryGetRevitVersion
+
+`TryGetRevitVersion` allow to get the Revit version from the assembly file.
+
 ```C#
 RevitUtils.TryGetRevitVersion(assemblyFile, out int revitVersion);
 ```
