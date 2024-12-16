@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace ricaun.Revit.Installation
 {
@@ -16,6 +16,7 @@ namespace ricaun.Revit.Installation
     {
         #region const
         private const string CONST_BUNDLE = ".bundle";
+        private const int MutexMillisecondsTimeout = 10000;
         #endregion
 
         #region Delete
@@ -30,7 +31,12 @@ namespace ricaun.Revit.Installation
             if (bundleName.EndsWith(CONST_BUNDLE) == false)
                 throw new Exception(string.Format("BundleName {0} does not end with {0}", bundleName, CONST_BUNDLE));
 
-            DeleteDirectoryAndFiles(Path.Combine(applicationPluginsFolder, bundleName));
+            using (var mutex = new Mutex(false, bundleName))
+            {
+                mutex.WaitOne(MutexMillisecondsTimeout);
+                DeleteDirectoryAndFiles(Path.Combine(applicationPluginsFolder, bundleName));
+                mutex.ReleaseMutex();
+            }
 
             void DeleteDirectoryAndFiles(string directory)
             {
@@ -73,23 +79,6 @@ namespace ricaun.Revit.Installation
         /// <returns></returns>
         public static bool DownloadBundle(string applicationPluginsFolder, string address, Action<Exception> downloadFileException = null, Action<string> logFileConsole = null)
         {
-            var task = Task.Run(async () =>
-            {
-                return await DownloadBundleAsync(applicationPluginsFolder, address, downloadFileException, logFileConsole);
-            });
-            return task.GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Download and unzip Bundle Async
-        /// </summary>
-        /// <param name="applicationPluginsFolder">Folder of the ApplicationPlugins or the Application.bundle</param>
-        /// <param name="address"></param>
-        /// <param name="downloadFileException"></param>
-        /// <param name="logFileConsole"></param>
-        /// <returns></returns>
-        public static async Task<bool> DownloadBundleAsync(string applicationPluginsFolder, string address, Action<Exception> downloadFileException = null, Action<string> logFileConsole = null)
-        {
             if (!Directory.Exists(applicationPluginsFolder))
                 Directory.CreateDirectory(applicationPluginsFolder);
 
@@ -97,21 +86,27 @@ namespace ricaun.Revit.Installation
             var zipPath = Path.Combine(applicationPluginsFolder, fileName);
             var result = false;
 
-            using (var client = new WebClient())
+            var bundleName = Path.GetFileNameWithoutExtension(fileName);
+            using (var mutex = new Mutex(false, bundleName))
             {
-                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
-                client.Headers[HttpRequestHeader.UserAgent] = nameof(ApplicationPluginsUtils);
-                try
+                mutex.WaitOne(MutexMillisecondsTimeout);
+                using (var client = new WebClient())
                 {
-                    await client.DownloadFileTaskAsync(new Uri(address), zipPath);
-                    ExtractBundleZipToDirectory(zipPath, applicationPluginsFolder, downloadFileException, logFileConsole);
-                    result = true;
+                    System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
+                    client.Headers[HttpRequestHeader.UserAgent] = nameof(ApplicationPluginsUtils);
+                    try
+                    {
+                        client.DownloadFile(new Uri(address), zipPath);
+                        ExtractBundleZipToDirectory(zipPath, applicationPluginsFolder, downloadFileException, logFileConsole);
+                        result = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        downloadFileException?.Invoke(ex);
+                    }
+                    if (File.Exists(zipPath)) File.Delete(zipPath);
                 }
-                catch (Exception ex)
-                {
-                    downloadFileException?.Invoke(ex);
-                }
-                if (File.Exists(zipPath)) File.Delete(zipPath);
+                mutex.ReleaseMutex();
             }
 
             return result;
