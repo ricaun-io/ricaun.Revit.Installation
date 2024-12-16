@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.3.0] / 2024-12-16
 ### Features
-- `RevitInstallationUtils.InstalledRevit` without `componentGuid`.
+- `RevitInstallationUtils.InstalledRevit` without `componentGuid`. (Fix: #9)
 ### Updates
 - Update `InstalledRevit` without `componentGuid`.
 
