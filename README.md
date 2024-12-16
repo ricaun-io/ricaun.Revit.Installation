@@ -10,7 +10,6 @@
 ### ApplicationPluginsUtils
 ```C#
 ApplicationPluginsUtils.DownloadBundle(applicationPluginsFolder, bundleUrl);
-ApplicationPluginsUtils.DownloadBundleAsync(applicationPluginsFolder, bundleUrl);
 ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
 ```
 
