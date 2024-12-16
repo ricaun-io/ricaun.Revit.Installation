@@ -49,6 +49,13 @@ RevitUtils.GetAllUsersAddInFolder(version);
 RevitUtils.TryGetRevitVersion(assemblyFile, out int revitVersion);
 ```
 
+### ProductInfoUtils
+
+`ProductInfoUtils` provides tools all installation in the machine as a `ProductInfo` class.
+```C#
+ProductInfoUtils.GetProductInfos();
+```
+
 ## Release
 
 * [Latest release](https://github.com/ricaun-io/ricaun.Revit.Installation/releases/latest)
