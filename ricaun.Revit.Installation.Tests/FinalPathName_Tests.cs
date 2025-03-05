@@ -10,7 +10,7 @@ namespace ricaun.Revit.Installation.Tests
         [TestCase("Program Files")] // English
         [TestCase("Arquivos de Programas")] // Portuguese
         [TestCase("Programme")] // German
-        public void GetMainModuleFileName_Test(string programFiles)
+        public void GetFinalPathName_For_ProgramFiles(string programFiles)
         {
             var pathShouldBe = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
