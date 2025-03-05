@@ -34,6 +34,36 @@ namespace ricaun.Revit.Installation.Utils
                 [MarshalAs(UnmanagedType.U4)] uint flagsAndAttributes,
                 IntPtr templateFile);
 
+
+
+        /// <summary>
+        /// Tries to get the final path name of the specified file.
+        /// </summary>
+        /// <param name="path">The path of the file.</param>
+        /// <param name="removeLongPathPrefix">If set to <c>true</c>, removes the long path prefix (\\?\) from the final path.</param>
+        /// <returns>The final path name of the specified file if successful; otherwise, returns the original path.</returns>
+        /// <remarks>
+        /// This method attempts to retrieve the final path name of the specified file. If an error occurs, it returns the original path.
+        /// </remarks>
+        public static string TryGetFinalPathName(this string path, bool removeLongPathPrefix = true)
+        {
+            try
+            {
+                return GetFinalPathName(path, removeLongPathPrefix);
+            }
+            catch
+            {
+                return path;
+            }
+        }
+
+        /// <summary>
+        /// Gets the final path name of the specified file.
+        /// </summary>
+        /// <param name="path">The path of the file.</param>
+        /// <param name="removeLongPathPrefix">If set to <c>true</c>, removes the long path prefix (\\?\) from the final path.</param>
+        /// <returns>The final path name of the specified file.</returns>
+        /// <exception cref="FileNotFoundException">Thrown when the file is not found or the final path name cannot be retrieved.</exception>
         public static string GetFinalPathName(string path, bool removeLongPathPrefix = true)
         {
             const int bufferSize = 1024;

@@ -88,7 +88,7 @@ namespace ricaun.Revit.Installation
         public static Process[] GetProcesses(this RevitInstallation revitInstallation)
         {
             return GetRevitProcesses()
-                .Where(e => e.GetMainModuleFileName().Contains(revitInstallation.InstallLocation))
+                .Where(e => e.GetMainModuleFileName().Contains(revitInstallation.InstallLocation.TryGetFinalPathName()))
                 .ToArray();
         }
         #endregion
