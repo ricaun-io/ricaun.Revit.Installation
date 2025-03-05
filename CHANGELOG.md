@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 ### Updates
 - Add `FinalPathNameExtension` to fix localized `InstallLocation`. (Fix: #13)
+- Update typo related to `Journal`.
 ### Tests
 - Add `FinalPathName_Tests` with `english`, `portuguese` and `german` tests.
 
