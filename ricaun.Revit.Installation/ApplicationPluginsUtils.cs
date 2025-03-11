@@ -134,8 +134,6 @@ namespace ricaun.Revit.Installation
             if (destinationDirectoryName.EndsWith(CONST_BUNDLE) == false)
                 destinationDirectoryName = Path.Combine(destinationDirectoryName, Path.GetFileNameWithoutExtension(archiveFileName));
 
-            Console.WriteLine(destinationDirectoryName);
-
             using (var archive = ZipFile.OpenRead(archiveFileName))
             {
                 string baseDirectory = string.Empty;
