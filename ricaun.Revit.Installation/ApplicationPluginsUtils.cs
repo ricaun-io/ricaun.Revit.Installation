@@ -17,6 +17,7 @@ namespace ricaun.Revit.Installation
         #region const
         private const string CONST_BUNDLE = ".bundle";
         private const int MutexMillisecondsTimeout = 10000;
+        private const string CONST_PACKAGE_CONTENTS = "PackageContents.xml";
         #endregion
 
         #region Delete
@@ -114,6 +115,10 @@ namespace ricaun.Revit.Installation
         #endregion
 
         #region BundleZip
+        private static bool IsEntryPackageContents(ZipArchiveEntry entry)
+        {
+            return entry.Name.Equals(CONST_PACKAGE_CONTENTS, StringComparison.InvariantCultureIgnoreCase);
+        }
         /// <summary>
         /// ExtractToDirectory with overwrite enable
         /// </summary>
@@ -129,12 +134,14 @@ namespace ricaun.Revit.Installation
             if (destinationDirectoryName.EndsWith(CONST_BUNDLE) == false)
                 destinationDirectoryName = Path.Combine(destinationDirectoryName, Path.GetFileNameWithoutExtension(archiveFileName));
 
+            Console.WriteLine(destinationDirectoryName);
+
             using (var archive = ZipFile.OpenRead(archiveFileName))
             {
-                string baseDirectory = null;
+                string baseDirectory = string.Empty;
 
                 // Check if first file is inside the bundle folder, to ignore when extract.
-                var firstFile = archive.Entries.FirstOrDefault();
+                var firstFile = archive.Entries.FirstOrDefault(IsEntryPackageContents);
                 if (firstFile is not null)
                 {
                     var firstDirectory = Path.GetDirectoryName(firstFile.FullName);
@@ -142,9 +149,9 @@ namespace ricaun.Revit.Installation
                         baseDirectory = firstDirectory;
                 }
 
-                foreach (var file in archive.Entries.Reverse())
+                foreach (var file in archive.Entries.OrderBy(IsEntryPackageContents))
                 {
-                    var fileFullName = file.FullName.Substring(baseDirectory.Length).TrimStart('/');
+                    var fileFullName = file.FullName.Substring(baseDirectory.Length).TrimStart('/').TrimStart('\\');
 
                     var completeFileName = Path.Combine(destinationDirectoryName, fileFullName);
                     var directory = Path.GetDirectoryName(completeFileName);
@@ -171,6 +178,20 @@ namespace ricaun.Revit.Installation
                 }
             }
         }
+
+        internal static string GetBaseDirectory(string fullPath)
+        {
+            if (Path.IsPathRooted(fullPath))
+                return Path.GetPathRoot(fullPath);
+
+            var baseDirectory = Path.GetDirectoryName(fullPath);
+            while (!string.IsNullOrEmpty(Path.GetDirectoryName(baseDirectory)))
+            {
+                baseDirectory = Path.GetDirectoryName(baseDirectory);
+            }
+            return baseDirectory;
+        }
+
         #endregion
     }
 }

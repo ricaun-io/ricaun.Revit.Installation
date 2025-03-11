@@ -10,8 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `FinalPathNameExtension` to fix localized `InstallLocation`. (Fix: #13)
 - Update `GetProcesses` to use `FinalPathNameExtension` to fix localized `InstallLocation`.
 - Update typo related to `Journal`.
+- Update `ApplicationPluginsUtils` to fix `bundle.zip` download.
 ### Tests
 - Add `FinalPathName_Tests` with `english`, `portuguese` and `german` tests.
+- Add `BundleCreatorUtils` to test `ApplicationPluginsUtils` with fake `bundle.zip`.
 
 ## [1.3.1] / 2024-12-16
 ### Features
