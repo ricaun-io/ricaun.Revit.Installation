@@ -92,7 +92,7 @@ namespace ricaun.Revit.Installation.Tests
         [Test]
         [Explicit]
         [Ignore("This test will start Revit")]
-        public void InstalledRevit_Test_StartWithJornal()
+        public void InstalledRevit_Test_StartWithJournal()
         {
             var InstalledRevits = RevitInstallationUtils.InstalledRevit;
             var installedRevit = InstalledRevits.LastOrDefault();
@@ -102,9 +102,9 @@ namespace ricaun.Revit.Installation.Tests
                 {
                     string workingDirectory = Path.Combine(Path.GetTempPath(), "_RevitInstallation_Test_");
                     Directory.CreateDirectory(workingDirectory);
-                    Console.WriteLine($"{installedRevit}: StartWithJornal {workingDirectory}");
+                    Console.WriteLine($"{installedRevit}: StartWithJournal {workingDirectory}");
                     var forceToExited = false;
-                    process = installedRevit.StartWithJornal(workingDirectory);
+                    process = installedRevit.StartWithJournal(workingDirectory);
                     process.ErrorDataReceived += (s, e) =>
                     {
                         Console.WriteLine(e.Data);
