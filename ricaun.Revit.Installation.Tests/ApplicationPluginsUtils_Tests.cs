@@ -15,7 +15,7 @@ namespace ricaun.Revit.Installation.Tests
         {
             var bundleUrl = $@"https://github.com/ricaun-io/{projectName}/releases/latest/download/{projectName}.bundle.zip";
 
-            var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
+            var applicationPluginsFolder = Path.Combine(Path.GetTempPath(), "ApplicationPlugins");
             var bundleName = Path.GetFileNameWithoutExtension(bundleUrl);
 
             Console.WriteLine($"DownloadBundle: {bundleName}");
@@ -45,7 +45,7 @@ namespace ricaun.Revit.Installation.Tests
         {
             var bundleUrl = $@"https://github.com/ricaun-io/{projectName}/releases/latest/download/{projectName}.bundle.zip";
 
-            var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
+            var applicationPluginsFolder = Path.Combine(Path.GetTempPath(), "ApplicationPlugins");
             var bundleName = Path.GetFileNameWithoutExtension(bundleUrl);
 
             Console.WriteLine($"DownloadBundle: {bundleName}");
@@ -76,7 +76,7 @@ namespace ricaun.Revit.Installation.Tests
         {
             var bundleUrl = BundleCreatorUtils.CreateBundleZip(projectName, includeBundleDirectory, includeContents);
 
-            var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
+            var applicationPluginsFolder = Path.Combine(Path.GetTempPath(), "ApplicationPlugins");
             var bundleName = Path.GetFileNameWithoutExtension(bundleUrl);
 
             Console.WriteLine($"DownloadBundle: {bundleName}");
