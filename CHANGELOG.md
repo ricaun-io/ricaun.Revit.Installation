@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] / 2025-04-03
+### Updates
+- Update `RevitInstallation.Start` to start `Process` with `UseShellExecute` true. (Fix: #15)
+### Tests
+- Test to start Revit to verify if `Process` with `UseShellExecute` works.
+
 ## [1.3.2] / 2025-03-05
 ### Features
 - Support localized `InstallLocation` path.
@@ -94,6 +100,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `ricaun.Revit.Installation.Tests`
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.4.0]: ../../compare/1.3.2...1.4.0
 [1.3.2]: ../../compare/1.3.1...1.3.2
 [1.3.1]: ../../compare/1.3.0...1.3.1
 [1.3.0]: ../../compare/1.2.0...1.3.0
