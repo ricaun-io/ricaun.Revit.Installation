@@ -37,7 +37,14 @@ namespace ricaun.Revit.Installation
         public static Process Start(this RevitInstallation revitInstallation, string arguments = DefaultArguments)
         {
             var revitExe = Path.Combine(revitInstallation.InstallLocation, ExecuteName);
-            var process = Process.Start(revitExe, arguments);
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = revitExe,
+                Arguments = arguments,
+                UseShellExecute = true, // This ensures the process is not a child process
+            };
+            var process = Process.Start(startInfo);
+
             return process;
         }
 
