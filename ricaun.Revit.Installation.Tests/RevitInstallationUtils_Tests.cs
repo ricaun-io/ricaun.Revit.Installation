@@ -47,6 +47,17 @@ namespace ricaun.Revit.Installation.Tests
         }
 
         [Test]
+        public void InstalledRevit_Start_LastVersion()
+        {
+            var InstalledRevits = RevitInstallationUtils.InstalledRevit;
+            var installedRevit = InstalledRevits.LastOrDefault();
+            if (installedRevit is not null)
+            {
+                installedRevit.Start();
+            }
+        }
+
+        [Test]
         [Explicit]
         [Ignore("This test will start Revit")]
         public void InstalledRevit_Test_Start()

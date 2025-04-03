@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.4.0] / 2025-04-03
 ### Updates
 - Update `RevitInstallation.Start` to start `Process` with `UseShellExecute` true. (Fix: #15)
+### Tests
+- Test to start Revit to verify if `Process` with `UseShellExecute` works.
 
 ## [1.3.2] / 2025-03-05
 ### Features
