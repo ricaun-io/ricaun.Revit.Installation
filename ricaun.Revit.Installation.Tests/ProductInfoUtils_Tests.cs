@@ -53,13 +53,14 @@ namespace ricaun.Revit.Installation.Tests
             var productInfos = ProductInfoUtils.GetProductInfos();
             foreach (var productInfo in productInfos.Where(e => e.Publisher == publisher && e.ProductName.StartsWith(productNameStarts)))
             {
-                Console.WriteLine(productInfo);
-                //ShowProperties(productInfo);
+                Console.WriteLine($"{productInfo}");
+                ShowProperties(productInfo);
                 //Console.WriteLine();
             }
         }
 
-        [TestCase("705C0D862004")]
+        [TestCase("705C0D862004")] // Revit
+        [TestCase("CF3F3A09B77D")] // AutoCAD
         public void GetProductInfo_ProductCode(string productCodeContains)
         {
             var productInfos = ProductInfoUtils.GetProductInfos();
@@ -84,7 +85,7 @@ namespace ricaun.Revit.Installation.Tests
         {
             foreach (var propertyInfo in value.GetType().GetProperties())
             {
-                Console.WriteLine($"{propertyInfo.Name}:\t{propertyInfo.GetValue(value)}");
+                Console.WriteLine($"\t{propertyInfo.Name}:\t{propertyInfo.GetValue(value)}");
             }
         }
 
