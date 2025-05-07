@@ -54,7 +54,7 @@ namespace ricaun.Revit.Installation.Tests
             foreach (var productInfo in productInfos.Where(e => e.Publisher == publisher && e.ProductName.StartsWith(productNameStarts)))
             {
                 Console.WriteLine($"{productInfo}");
-                ShowProperties(productInfo);
+                //ShowProperties(productInfo);
                 //Console.WriteLine();
             }
         }
